@@ -7,12 +7,12 @@ function restrict(role = "default") {
             message: "Invalid credentials",
         }
         try {
-            const token = req.cookies.token
+            const token = req.headers.authorization //may need to change back to req.cookies.token
             if (!token) {
                 return res.status(401).json(authError)
             }
             jwt.verify(token, process.env.JWT_SECRET, (err, decodedPayload) => {
-                if (err || decodedPayload.department !== role) {
+                if (err || decodedPayload.userRole !== role) {
                     return res.status(401).json(authError)
                 }
                 req.token = decodedPayload

@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const Users = require("../users/users-model")
 const restrict = require("../middleware/restrict")
-
+require("dotenv").config
 const router = express.Router()
 
 router.post("/register", async (req, res, next) => {
@@ -44,13 +44,26 @@ router.post("/login", async (req, res, next) => {
             userId: user.id,
             userRole: "admin",
 
+
         }
-
-        res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET))
-
+        token = jwt.sign(tokenPayload, "keep is secret, keep it safe", {
+            expiresIn: "24h",
+        });
+        res.cookie(
+            "token",
+            jwt.sign(tokenPayload, "keep is secret, keep it safe", { expiresIn: "24h" })
+        );
         res.json({
-            message: `Welcome ${user.username}!`,
-        })
+            token: token,
+            message: `Welcome`,
+        });
+        // res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET))
+        // token = jwt.sign(tokenPayload, process.env.JWT_SECRET)
+
+        // res.json({
+        //     token: token,
+        //     message: `Welcome ${user.username}!`,
+        // })
     } catch (err) {
         next(err)
     }
