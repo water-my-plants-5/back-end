@@ -43,6 +43,7 @@ router.post("/login", async (req, res, next) => {
         const tokenPayload = {
             userId: user.id,
             userRole: "admin",
+
         }
 
         res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET))
