@@ -1,3 +1,4 @@
+
 const express = require("express")
 const helmet = require("helmet")
 const cors = require("cors")
@@ -27,7 +28,7 @@ server.use(function (req, res, next) {
 
 
 server.use("/auth", authRouter)
-server.use("/users", usersRouter)
+server.use("/users", usersRouter) // added restrict after testing in insomnia. Go here first if problems
 server.use("/plants", plantsRouter);
 
 server.get("/", (req, res, next) => {
@@ -43,7 +44,10 @@ server.use((err, req, res, next) => {
     })
 })
 
+if (!module.parent) {
+    server.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+    });
+};
 
-server.listen(port, () => {
-    console.log(`Running at http://localhost:${port}`)
-})
+module.exports = server

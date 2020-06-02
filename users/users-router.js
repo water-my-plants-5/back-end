@@ -1,3 +1,7 @@
+
+
+
+
 const express = require("express")
 const Users = require("../users/users-model")
 const restrict = require("../middleware/restrict")
@@ -42,7 +46,7 @@ router.post("/", restrict(), (req, res) => {
         });
 });
 
-router.put("/:id", restrict(), (req, res) => {
+router.put("/:id", (req, res) => {
     const { id } = req.params;
     const changes = req.body;
 
@@ -64,7 +68,7 @@ router.put("/:id", restrict(), (req, res) => {
 });
 
 
-router.delete("/:id", restrict(), (req, res) => {
+router.delete("/:id", (req, res) => {
     const { id } = req.params;
 
     Users.remove(id)
