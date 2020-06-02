@@ -5,12 +5,12 @@
 const db = require("../database/config");
 
 
-function find() {
+function getResources() {
     return db("plants");
 }
 
 
-function findById(id) {
+function getById(id) {
     return db("plants")
         .where({ id })
         .first();
@@ -21,7 +21,7 @@ function add(plant) {
     return db("plants")
         .insert(plant)
         .then(ids => {
-            return findById(ids[0]);
+            return getById(ids[0]);
         });
 }
 
@@ -44,8 +44,8 @@ function remove(id) {
 
 
 module.exports = {
-    find,
-    findById,
+    getResources,
+    getById,
     add,
     update,
     remove

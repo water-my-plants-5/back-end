@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
 
-    plant.getByID(req.params.id)
+    plant.getById(req.params.id)
         .then(plants => {
             if (plants) {
                 res.json(plants)
@@ -34,6 +34,7 @@ router.post('/', (req, res) => {
         res.status(200).json(newPlant)
     }).catch(err => {
         res.status(500).json({ message: 'an error has occurred' })
+        console.log(err)
     })
 })
 
